@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+
 
 const Article = require('./models/Article');
 const User = require('./models/User');
@@ -11,12 +11,18 @@ const Notification = require('./models/Notification');
 const app = express();
 const PORT = 3000;
 
-mongoose.connect('mongodb://localhost:27017/nodejs-backend-assignment', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+app.use(express.json());
 
-app.use(bodyParser.json());
+// mongoose.connect('mongodb://localhost:27017/nodejs-backend-assignment', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
+
+mongoose
+.connect("mongodb://localhost:27017/nodejs-backend-assignment")
+.then(() => console.log("Connection with Data Base is Established Sucessfully"))
+.catch((err) => console.log("Error with Connection with DataBAse", err));
+
 
 // Caching mechanism (simple in-memory cache)
 const popularArticlesCache = new Map();
